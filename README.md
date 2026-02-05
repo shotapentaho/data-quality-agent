@@ -305,14 +305,25 @@ AI Analysis Skipped:
   ✗ API rate limit exceeded
   ✗ Network connectivity issues
 
-Benchmarks (on MacBook Pro M1, 16GB RAM):
+1. Data Onboarding
+Validate new data sources before ingestion
+Identify quality issues early
+Generate data quality reports for stakeholders
 
-File Size     Rows      Processing Time    Memory Usage
-─────────────────────────────────────────────────────────
-10 MB         100K      3-5 seconds        ~150 MB
-50 MB         500K      8-12 seconds       ~600 MB
-100 MB        1M        15-20 seconds      ~1.2 GB
-500 MB        5M        45-60 seconds      ~4 GB (with sampling)
+2. ML Pipeline Preparation
+Pre-flight checks before model training
+Feature quality assessment
+Identify data drift and anomalies
+
+3. Data Quality Monitoring
+Regular quality checks on production data
+Track quality metrics over time
+Alert on quality degradation
+
+4. Data Cleansing
+Identify specific records needing attention
+Prioritize cleaning efforts by impact
+Validate post-cleaning results
 
 Optimization Features:
 - Chunked file reading
@@ -320,9 +331,14 @@ Optimization Features:
 - Lazy evaluation for visualizations
 - Memory-efficient data types
 
+
+Contact & Support
+Email: support AT cxloop.co
+
 Built with ❤️ using:
 
 Streamlit - App framework
 Pandas - Data manipulation
 Google Gemini - AI insights
 Matplotlib & Seaborn - Visualizations
+
