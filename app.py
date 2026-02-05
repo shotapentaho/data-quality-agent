@@ -15,6 +15,18 @@ from modules.file_handler import load_uploaded_file
 from views.single_file_view import render_single_file_results
 from views.batch_results_view import render_batch_results
 
+# Theme (works with our CSS overrides)
+from st_ui_theme import apply_theme
+apply_theme()
+
+st.markdown(
+    """
+<style>
+#MainMenu {visibility: hidden;}
+</style>
+""",
+    unsafe_allow_html=True
+)
 # Page configuration
 st.set_page_config(
     page_title="CX Data Quality Agent",
@@ -22,6 +34,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
 
 # Custom CSS
 st.markdown("""
