@@ -19,6 +19,8 @@ from views.batch_results_view import render_batch_results
 from st_ui_theme import apply_theme
 apply_theme()
 
+import streamlit.components.v1 as components
+
 st.markdown(
     """
 <style>
@@ -33,6 +35,49 @@ st.set_page_config(
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="collapsed"
+)
+
+# Header widget: aligned to the right, Arial font, red/white Logout button
+components.html(
+    """
+    <div style="width:100%; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif;">
+      <div style="display:flex; justify-content:flex-end; align-items:center; gap:12px;">
+        <div id="whoami"
+             style="padding:8px 12px; border:2px solid #ff4d4f; border-radius:6px; color:#000; font-family: Arial, Helvetica, sans-serif;">
+          Checking sign-in...
+        </div>
+        <button id="logoutBtn"
+                style="background:#e53935; color:#ffffff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-family: Arial, Helvetica, sans-serif; display:none;">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <script>
+      async function showWhoami() {
+        try {
+          const r = await fetch('/whoami', { credentials: 'same-origin' });
+          if (!r.ok) throw new Error('not-authenticated');
+          const j = await r.json();
+          document.getElementById('whoami').innerText = 'Signed in as: ' + (j.email || 'unknown');
+          document.getElementById('logoutBtn').style.display = 'inline-block';
+        } catch (e) {
+          document.getElementById('whoami').innerText = 'Not signed in';
+          document.getElementById('logoutBtn').style.display = 'none';
+        }
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+        // reload the page to clear UI and get redirected if upstream does so
+        window.location.reload();
+      });
+
+      showWhoami();
+    </script>
+    """,
+    height=72,
+    scrolling=False,
 )
 
 
@@ -62,6 +107,8 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+
 
 # Initialize session state
 SessionManager.initialize()
